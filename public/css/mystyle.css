@@ -1,0 +1,114 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    /* height: 100vh; */
+}
+html{
+    font-size: 62.5%;
+}
+.box{
+    background: #0a183d;
+    color: cornsilk;
+    min-width: 30vw;
+    min-height: 35vh;
+    border-radius: 10px;
+    box-shadow: 10px 10px 6px -8px black;
+    margin-top: 10px;
+}
+/* #btn{
+    display: inline-block;
+        background:rgb(233, 179, 41);
+        color: #f4f4f4;
+        font-size: 12px;
+        font-weight: normal;
+        text-align: center;
+        border-radius: 10px groove;
+        text-decoration: none;
+        padding: 10px;
+        z-index: 100000;
+        transition: 400ms;
+        margin-left: 300px;
+} */
+#btn {
+    position: relative;
+    background-color:rgb(233, 179, 41);
+    border: none;
+    font-size: 12px;
+    color: #FFFFFF;
+    padding: 20px;
+    width: 75px;
+    border-radius: 15px;
+    text-align: center;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden; 
+    cursor: pointer;
+  }
+  
+  #btn:after {
+    content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+  }
+  
+  #btn:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+  }
+  
+input[type=text] {
+    width: 80%;
+    padding: 12px ;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+}
+
+#date{
+    /* background-color: rgb(53, 51, 51); */
+    display:flex;
+    justify-content:flex-end; 
+    align-items:center;
+    font-size: 15px;
+    color:gray;
+}
+#weathercon{
+    font-size:100px;
+   margin-left: 100px;
+   margin-bottom: 5px;
+   animation: rotate  3s linear infinite alternate ;
+}
+@keyframes rotate {
+    from{
+        font-size:70px;
+    }
+    to{
+        font-size:90px;
+    }
+}   
+
+#temp{
+    font-size: 50px;
+}
+#disCity{
+    font-size: 12;
+    color: gray;
+}

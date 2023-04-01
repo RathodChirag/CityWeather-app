@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>City weather</title>
+</head>
+<body>
+
+    {{!-- navbar --}}
+    <div class="container-fluid main_menu">
+        <div class="row">
+          <div class="col-md-10 col-12 mx-auto">
+         <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">City Weather</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/index">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/About">About</a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link" href="/weather">Weather</a>
+            </li>
+          </ul>
+         
+        </div>
+      </nav>
+    </div>
+</div>
+</div>
+
+
+{{!-- detail --}}
+   <div class="container-fluid weather_data">
+        <div class="row">
+          <div class="col-md-10 col-12 mx-auto">  
+            <div class="row">
+                <div class="col-md-6 col-12 mx-auto">
+                      <h1>Enter City Name And Get  <span class="txt_color"> Temprature </span> Of Your City..</span></h1>
+                    <div class="box">
+                       
+                    <div class="cityName">
+                        <input type="text" name="city" id="city" placeholder="" autocomplete="off">
+                        <button id="btn">Serch</button>
+                    </div>
+                    <div class="cityTemp">
+                    <p id="date"></p>
+                    <h3 id="disCity">Get Tempreture Here..</h3>
+                    <p id="temp"></p>
+                    <p id="weathercon"> </p>
+                    {{!-- <p id="visibility"> Visibility :  </p> --}}
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{!-- footer --}}
+<footer>
+    <p>created By chirag Rathod 😎</p>
+</footer>
+
+
+<script>
+    const CurDate = document.getElementById("date");
+    const getCurrDate = () =>{
+        const currDate = new Date();
+        const currdate = currDate.getDate();
+        //return currdate;
+
+
+        const currMonth = new Date();
+               var Months = [ 
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"]
+                const currmonth = currMonth.getMonth();
+
+
+
+                const currDay = new Date();
+                 const Days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+                 const currday = currDay.getDay();
+                 return `${currdate}  ${Months[currmonth]}   ||  ${Days[currday]}`;
+
+    }
+   
+    
+    
+    CurDate.innerHTML = getCurrDate();
+
+
+    const btn = document.getElementById("btn");
+
+
+     var city = document.getElementById("city");
+     var disCity = document.getElementById("disCity");
+      var temp = document.getElementById("temp");
+      var weathercon = document.getElementById("weathercon");
+       var visibility = document.getElementById("visibility");
+
+     
+    const getDetail = async() =>{
+        const cityVal = city.value;
+       // document.getElementById("disCity").innerHTML = cityVal;
+       if(cityVal === ""){
+            disCity.innerHTML = "please enter city name before search..";
+       }else{
+           try{
+                let url = `http://api.openweathermap.org/data/2.5/weather?q=${cityVal}&appid=f91d3a16dc578db5fc66cc5cd4a71a72`;
+                const response = await fetch(url);
+                const data = await response.json();
+                //console.log(data);
+                const arrData = [data];
+                 disCity.innerHTML = `${arrData[0].name}, ${arrData[0].sys.country}`;
+                const celcius = Math.round(arrData[0].main.temp - 273);
+                 temp.innerHTML = celcius;
+                //weathercon.innerHTML= arrData[0].weather[0].main;
+                const Visibility = arrData[0].visibility;
+                visibility.innerHTML = Visibility;
+                const tempMood = arrData[0].weather[0].main;
+                
+
+                // check the tempreture mood :
+                if(tempMood == "Clear"){
+                    weathercon.innerHTML = 
+                    "<i class='fas fa-sun' style='color: #eccc68;'></i>";
+                }else if(tempMood == "Clouds"){
+                    weathercon.innerHTML = 
+                    "<i class='fas fa-cloud' style='color: #fff;'></i>";
+                }else if(tempMood == "Drizzle"){
+                    weathercon.innerHTML = 
+                    "<i class='fas fa-cloud-rain' style='color: #a4b0be;'></i>";
+                }else if (tempMood == "Haze"){
+                    weathercon.innerHTML =
+                   "<i class='fas fa-smog' style='color:  #a4b0be'></i>"
+                }else{
+                     weathercon.innerHTML = 
+                    "<i class='fas fa-cloud' style='color: #fff;'></i>";
+                }
+                
+                
+           }
+           catch{
+               disCity.innerHTML = "please enter city name properly";
+           }
+           
+       }
+     
+    }
+    btn.addEventListener("click",getDetail);
+</script>
+</body>
+</html>
+
+
+
+
